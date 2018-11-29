@@ -2,7 +2,7 @@
 {
   "modid": "cakechomps",
   "name": "Cake Chomps",
-  "description": "",
+  "description": "Adds sound and crumb particles when you eat cake.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
