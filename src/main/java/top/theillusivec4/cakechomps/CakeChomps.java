@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018  C4
+ * Copyright (C) 2018-2019  C4
  *
  * This file is part of Cake Chomps, a mod made for Minecraft.
  *
@@ -17,26 +17,36 @@
  * License along with Cake Chomps.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package c4.cakechomps;
+package top.theillusivec4.cakechomps;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCake;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Particles;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ItemParticleData;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
-public class EventHandlerCommon {
+@Mod("cakechomps")
+public class CakeChomps {
+
+    private static final Random RAND = new Random();
+
+    public CakeChomps() {
+        MinecraftForge.EVENT_BUS.register(this);
+    }
 
     @SubscribeEvent
     public void onBlockRightClick(PlayerInteractEvent.RightClickBlock evt) {
@@ -48,23 +58,24 @@ public class EventHandlerCommon {
 
         if (block instanceof BlockCake && player.canEat(false)) {
             ItemStack stack = block.getPickBlock(state, null, world, pos, player);
-            Random rand = CakeChomps.rand;
 
-            for (int i = 0; i < 5; ++i) {
-                Vec3d vec3d = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
-                vec3d = vec3d.rotatePitch(-player.rotationPitch * 0.017453292F);
-                vec3d = vec3d.rotateYaw(-player.rotationYaw * 0.017453292F);
-                double d0 = (double)(-rand.nextFloat()) * 0.6D - 0.3D;
-                Vec3d vec3d1 = new Vec3d(((double)rand.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-                vec3d1 = vec3d1.rotatePitch(-player.rotationPitch * 0.017453292F);
-                vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * 0.017453292F);
+            for(int i = 0; i < 5; ++i) {
+                Vec3d vec3d = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
+                vec3d = vec3d.rotatePitch(-player.rotationPitch * ((float)Math.PI / 180F));
+                vec3d = vec3d.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
+                double d0 = (double)(-RAND.nextFloat()) * 0.6D - 0.3D;
+                Vec3d vec3d1 = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+                vec3d1 = vec3d1.rotatePitch(-player.rotationPitch * ((float)Math.PI / 180F));
+                vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
                 vec3d1 = vec3d1.add(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
-                player.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x,
-                        vec3d.y + 0.05D, vec3d.z, Item.getIdFromItem(stack.getItem()), stack.getMetadata());
+                if (player.world instanceof WorldServer)
+                    ((WorldServer)player.world).spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z, 1, vec3d.x, vec3d.y + 0.05D, vec3d.z, 0.0D);
+                else
+                    player.world.spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z);
             }
             world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS,
-                    0.5F + 0.5F * (float)rand.nextInt(2),
-                    (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
+                    0.5F + 0.5F * (float)RAND.nextInt(2),
+                    (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
         }
     }
 }
