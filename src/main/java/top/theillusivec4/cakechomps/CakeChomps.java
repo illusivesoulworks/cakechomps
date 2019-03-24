@@ -39,17 +39,18 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
-@Mod("cakechomps")
+@Mod(CakeChomps.MODID)
 public class CakeChomps {
+
+    public static final String MODID = "cakechomps";
 
     private static final Random RAND = new Random();
 
     public CakeChomps() {
-        MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.addListener(this::onCakeRightClick);
     }
 
-    @SubscribeEvent
-    public void onBlockRightClick(PlayerInteractEvent.RightClickBlock evt) {
+    private void onCakeRightClick(PlayerInteractEvent.RightClickBlock evt) {
         World world = evt.getWorld();
         EntityPlayer player = evt.getEntityPlayer();
         BlockPos pos = evt.getPos();
@@ -68,14 +69,17 @@ public class CakeChomps {
                 vec3d1 = vec3d1.rotatePitch(-player.rotationPitch * ((float)Math.PI / 180F));
                 vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
                 vec3d1 = vec3d1.add(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
-                if (player.world instanceof WorldServer)
-                    ((WorldServer)player.world).spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z, 1, vec3d.x, vec3d.y + 0.05D, vec3d.z, 0.0D);
-                else
-                    player.world.spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z);
+
+                if (player.world instanceof WorldServer) {
+                    ((WorldServer) player.world).spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x,
+                            vec3d1.y, vec3d1.z, 1, vec3d.x, vec3d.y + 0.05D, vec3d.z, 0.0D);
+                } else {
+                    player.world.addParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
+                            vec3d.x, vec3d.y + 0.05D, vec3d.z);
+                }
             }
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS,
-                    0.5F + 0.5F * (float)RAND.nextInt(2),
-                    (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
+            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5F + 0.5F *
+                            (float)RAND.nextInt(2), (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
         }
     }
 }
