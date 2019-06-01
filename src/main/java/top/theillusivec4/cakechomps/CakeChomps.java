@@ -19,67 +19,52 @@
 
 package top.theillusivec4.cakechomps;
 
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCake;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Particles;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.CakeBlock;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.particle.ItemStackParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 
-@Mod(CakeChomps.MODID)
-public class CakeChomps {
-
-    public static final String MODID = "cakechomps";
+public class CakeChomps implements ModInitializer {
 
     private static final Random RAND = new Random();
 
-    public CakeChomps() {
-        MinecraftForge.EVENT_BUS.addListener(this::onCakeRightClick);
-    }
+    @Override
+    public void onInitialize() {
+        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+            BlockPos pos = hitResult.getBlockPos();
+            Block block = world.getBlockState(pos).getBlock();
 
-    private void onCakeRightClick(PlayerInteractEvent.RightClickBlock evt) {
-        World world = evt.getWorld();
-        EntityPlayer player = evt.getEntityPlayer();
-        BlockPos pos = evt.getPos();
-        IBlockState state = world.getBlockState(pos);
-        Block block = state.getBlock();
+            if (block instanceof CakeBlock && player.canConsume(false)) {
+                Item item = Item.BLOCK_ITEM_MAP.get(block);
+                ItemStack stack = new ItemStack(item);
 
-        if (block instanceof BlockCake && player.canEat(false)) {
-            ItemStack stack = block.getPickBlock(state, null, world, pos, player);
-
-            for(int i = 0; i < 5; ++i) {
-                Vec3d vec3d = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D, 0.0D);
-                vec3d = vec3d.rotatePitch(-player.rotationPitch * ((float)Math.PI / 180F));
-                vec3d = vec3d.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
-                double d0 = (double)(-RAND.nextFloat()) * 0.6D - 0.3D;
-                Vec3d vec3d1 = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-                vec3d1 = vec3d1.rotatePitch(-player.rotationPitch * ((float)Math.PI / 180F));
-                vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
-                vec3d1 = vec3d1.add(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
-
-                if (player.world instanceof WorldServer) {
-                    ((WorldServer) player.world).spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x,
-                            vec3d1.y, vec3d1.z, 1, vec3d.x, vec3d.y + 0.05D, vec3d.z, 0.0D);
-                } else {
-                    player.world.addParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
+                for (int i = 0; i < 5; i++) {
+                    Vec3d vec3d = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.1D, RAND.nextDouble() * 0.1D + 0.1D, 0.0D);
+                    vec3d = vec3d.rotateX(-player.pitch * 0.017453292F);
+                    vec3d = vec3d.rotateY(-player.yaw * 0.017453292F);
+                    double d0 = (double)(-RAND.nextFloat()) * 0.6D - 0.3D;
+                    Vec3d vec3d1 = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+                    vec3d1 = vec3d1.rotateX(-player.pitch * 0.017453292F);
+                    vec3d1 = vec3d1.rotateY(-player.yaw * 0.017453292F);
+                    vec3d1 = vec3d1.add(player.x, player.y + (double)player.getStandingEyeHeight(), player.z);
+                    world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
                             vec3d.x, vec3d.y + 0.05D, vec3d.z);
                 }
+                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5F + 0.5F *
+                        (float)RAND.nextInt(2), (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1F);
             }
-            world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5F + 0.5F *
-                            (float)RAND.nextInt(2), (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
-        }
+            return ActionResult.PASS;
+        });
     }
 }
