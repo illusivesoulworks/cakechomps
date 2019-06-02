@@ -7,7 +7,8 @@
   "authors": ["${mod_author}"],
   "contact": {
     "homepage": "${mod_url}",
-    "sources": "${mod_source}"
+    "sources": "${mod_source}",
+    "issues": "${mod_issues}"
   },
   "license": "${mod_license}",
   "icon": "assets/${mod_id}/${mod_icon}",
