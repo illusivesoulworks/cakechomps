@@ -58,6 +58,7 @@ curseforge {
 		releaseType = "${curse_release}"
 		changelogType = 'markdown'
 		changelog = file('docs/CHANGELOG.md')
+		addGameVersion project.minecraft_version
 		addArtifact(sourcesJar)
 
 		relations {
