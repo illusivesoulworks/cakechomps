@@ -50,3 +50,24 @@ sourceSets {
 		}
 	}
 }
+
+curseforge {
+	project {
+		apiKey = findProperty('curseKey') ?: 0
+		id = "${curse_id}"
+		releaseType = "${curse_release}"
+		changelogType = 'markdown'
+		changelog = file('docs/CHANGELOG.md')
+		addArtifact(sourcesJar)
+
+		relations {
+			requiredDependency 'fabric'
+		}
+		afterEvaluate {
+			uploadTask.dependsOn(remapJar)
+		}
+	}
+	options {
+		forgeGradleIntegration = false
+	}
+}
