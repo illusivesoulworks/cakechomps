@@ -20,21 +20,20 @@
 package top.theillusivec4.cakechomps;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCake;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Particles;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CakeBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
@@ -52,12 +51,12 @@ public class CakeChomps {
 
     private void onCakeRightClick(PlayerInteractEvent.RightClickBlock evt) {
         World world = evt.getWorld();
-        EntityPlayer player = evt.getEntityPlayer();
+        PlayerEntity player = evt.getEntityPlayer();
         BlockPos pos = evt.getPos();
-        IBlockState state = world.getBlockState(pos);
+        BlockState state = world.getBlockState(pos);
         Block block = state.getBlock();
 
-        if (block instanceof BlockCake && player.canEat(false)) {
+        if (block instanceof CakeBlock && player.canEat(false)) {
             ItemStack stack = block.getPickBlock(state, null, world, pos, player);
 
             for(int i = 0; i < 5; ++i) {
@@ -70,11 +69,11 @@ public class CakeChomps {
                 vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * ((float)Math.PI / 180F));
                 vec3d1 = vec3d1.add(player.posX, player.posY + (double)player.getEyeHeight(), player.posZ);
 
-                if (player.world instanceof WorldServer) {
-                    ((WorldServer) player.world).spawnParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x,
+                if (player.world instanceof ServerWorld) {
+                    ((ServerWorld) player.world).spawnParticle(new ItemParticleData(ParticleTypes.ITEM, stack), vec3d1.x,
                             vec3d1.y, vec3d1.z, 1, vec3d.x, vec3d.y + 0.05D, vec3d.z, 0.0D);
                 } else {
-                    player.world.addParticle(new ItemParticleData(Particles.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
+                    player.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
                             vec3d.x, vec3d.y + 0.05D, vec3d.z);
                 }
             }
