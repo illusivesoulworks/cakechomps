@@ -10,6 +10,7 @@ buildscript {
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.2.0'
     }
 }
+apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
 
