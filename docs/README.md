@@ -1,3 +1,5 @@
-# Cake Chomps [![](http://cf.way2muchnoise.eu/versions/cake-chomps.svg)](https://minecraft.curseforge.com/projects/cake-chomps) [![](http://cf.way2muchnoise.eu/short_cake-chomps_downloads.svg)](https://minecraft.curseforge.com/projects/cake-chomps/files) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+# Cake Chomps [![](http://cf.way2muchnoise.eu/versions/cake-chomps.svg)](https://minecraft.curseforge.com/projects/cake-chomps) [![](http://cf.way2muchnoise.eu/short_cake-chomps_downloads.svg)](https://minecraft.curseforge.com/projects/cake-chomps/files) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg?&style=flat-square)](https://www.gnu.org/licenses/lgpl-3.0) [![](https://img.shields.io/discord/500852157503766538.svg?color=green&label=Discord&style=flat-square)](https://discord.gg/JWgrdwt)
 
 Cake Chomps is a mod that adds eating sounds and crumb particles, like when you're eating every other food item, to cakes. That's it.
+
+**FOR FABRIC VERSIONS**: Requires [Fabric API](https://minecraft.curseforge.com/projects/fabric)
