@@ -14,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
 
-version = "${version_minecraft}-${mod_version}"
+version = "${mod_version}"
 group = "${mod_group}"
 archivesBaseName = "${mod_id}"
 
