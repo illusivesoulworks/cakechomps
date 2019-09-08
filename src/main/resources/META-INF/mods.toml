@@ -1,20 +1,20 @@
 modLoader="javafml"
-loaderVersion="[26,)"
+loaderVersion="[28,)"
 issueTrackerURL="https://github.com/TheIllusiveC4/CakeChomps/issues"
-displayURL="${mod_url}"
 logoFile="${mod_icon}"
-authors="${mod_author}"
 [[mods]]
 modId="${mod_id}"
 version="${version}"
 displayName="${mod_name}"
+displayURL="${mod_url}"
+authors="${mod_author}"
 description='''
 ${mod_description}
 '''
 [[dependencies.cakechomps]]
     modId="forge"
     mandatory=true
-    versionRange="[26,)"
+    versionRange="[28,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.cakechomps]]
