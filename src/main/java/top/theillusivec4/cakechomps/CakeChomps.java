@@ -83,6 +83,7 @@ public class CakeChomps {
             .addParticle(particle, vec3d1.x, vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z);
       }
     }
+
     world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.BLOCKS, 0.5F + 0.5F *
         (float) RAND.nextInt(2), (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1.0F);
   }
