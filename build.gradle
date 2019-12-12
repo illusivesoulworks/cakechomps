@@ -62,12 +62,12 @@ curseforge {
         addGameVersion "Fabric"
 		addGameVersion project.minecraft_version
 		addArtifact(sourcesJar)
+		mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
 
 		relations {
-			requiredDependency 'fabric'
+			requiredDependency 'fabric-api'
 		}
 		afterEvaluate {
-			mainArtifact(remapJar)
 			uploadTask.dependsOn(remapJar)
 		}
 	}
