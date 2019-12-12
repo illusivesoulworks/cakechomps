@@ -1,7 +1,7 @@
 plugins {
-	id 'fabric-loom' version '0.2.2-SNAPSHOT'
+	id 'fabric-loom' version '0.2.6-SNAPSHOT'
 	id 'maven-publish'
-	id 'com.matthewprenger.cursegradle' version '1.2.0'
+	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -16,7 +16,7 @@ minecraft {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
+	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 }
@@ -39,7 +39,7 @@ tasks.withType(JavaCompile) {
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-	classifier = "sources"
+	archiveClassifier.set("sources")
 	from sourceSets.main.allSource
 }
 
@@ -58,6 +58,8 @@ curseforge {
 		releaseType = "${curse_release}"
 		changelogType = 'markdown'
 		changelog = file('docs/CHANGELOG.md')
+		addGameVersion "Java 8"
+        addGameVersion "Fabric"
 		addGameVersion project.minecraft_version
 		addArtifact(sourcesJar)
 
@@ -65,6 +67,7 @@ curseforge {
 			requiredDependency 'fabric'
 		}
 		afterEvaluate {
+			mainArtifact(remapJar)
 			uploadTask.dependsOn(remapJar)
 		}
 	}

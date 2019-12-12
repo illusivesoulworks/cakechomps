@@ -46,7 +46,7 @@ public class CakeChomps implements ModInitializer {
             Block block = world.getBlockState(pos).getBlock();
 
             if (block instanceof CakeBlock && player.canConsume(false)) {
-                Item item = Item.BLOCK_ITEM_MAP.get(block);
+                Item item = Item.BLOCK_ITEMS.get(block);
                 ItemStack stack = new ItemStack(item);
 
                 for (int i = 0; i < 5; i++) {
@@ -57,7 +57,7 @@ public class CakeChomps implements ModInitializer {
                     Vec3d vec3d1 = new Vec3d(((double)RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
                     vec3d1 = vec3d1.rotateX(-player.pitch * 0.017453292F);
                     vec3d1 = vec3d1.rotateY(-player.yaw * 0.017453292F);
-                    vec3d1 = vec3d1.add(player.x, player.y + (double)player.getStandingEyeHeight(), player.z);
+                    vec3d1 = vec3d1.add(player.getX(), player.getY() + (double)player.getStandingEyeHeight(), player.getZ());
                     world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
                             vec3d.x, vec3d.y + 0.05D, vec3d.z);
                 }
