@@ -2,16 +2,16 @@
   "schemaVersion": 1,
   "id": "cakechomps",
   "version": "${version}",
-  "name": "${mod_name}",
-  "description": "${mod_description}",
-  "authors": ["${mod_author}"],
+  "name": "Cake Chomps",
+  "description": "Adds sound and crumb particles when you eat cake.",
+  "authors": ["C4"],
   "contact": {
-    "homepage": "${mod_url}",
-    "sources": "${mod_source}",
-    "issues": "${mod_issues}"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/cake-chomps",
+    "sources": "https://github.com/TheIllusiveC4/CakeChomps",
+    "issues": "https://github.com/TheIllusiveC4/CakeChomps/issues"
   },
-  "license": "${mod_license}",
-  "icon": "assets/${mod_id}/${mod_icon}",
+  "license": "LGPLv3.0",
+  "icon": "assets/cakechomps/cakechomps_icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [

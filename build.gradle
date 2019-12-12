@@ -26,7 +26,7 @@ processResources {
 
 	from(sourceSets.main.resources.srcDirs) {
 		include "fabric.mod.json"
-		expand 'version': project.version, 'mod_name': mod_name, 'mod_url': mod_url, 'mod_author': mod_author, 'mod_description': mod_description, 'mod_icon': mod_icon, 'mod_source': mod_source, 'mod_issues': mod_issues, 'mod_license': mod_license
+		expand 'version': project.version
 	}
 
 	from(sourceSets.main.resources.srcDirs) {
