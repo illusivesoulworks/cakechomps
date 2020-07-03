@@ -28,12 +28,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.network.FMLNetworkConstants;
+import org.apache.commons.lang3.tuple.Pair;
 
 @Mod(CakeChomps.MODID)
 public class CakeChomps {
@@ -43,10 +47,12 @@ public class CakeChomps {
   private static final Random RAND = new Random();
 
   public CakeChomps() {
-    MinecraftForge.EVENT_BUS.addListener(this::onCakeRightClick);
+    ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST,
+        () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
+    MinecraftForge.EVENT_BUS.addListener(this::interactBlock);
   }
 
-  private void onCakeRightClick(PlayerInteractEvent.RightClickBlock evt) {
+  private void interactBlock(PlayerInteractEvent.RightClickBlock evt) {
     World world = evt.getWorld();
     PlayerEntity player = evt.getPlayer();
     BlockPos pos = evt.getPos();
@@ -59,16 +65,15 @@ public class CakeChomps {
     ItemStack stack = block.getPickBlock(state, null, world, pos, player);
 
     for (int i = 0; i < 16; ++i) {
-      Vec3d vec3d = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.1D,
+      Vector3d vec3d = new Vector3d(((double) RAND.nextFloat() - 0.5D) * 0.1D,
           Math.random() * 0.1D + 0.1D, 0.0D);
       vec3d = vec3d.rotatePitch(-player.rotationPitch * ((float) Math.PI / 180F));
       vec3d = vec3d.rotateYaw(-player.rotationYaw * ((float) Math.PI / 180F));
       double d0 = (double) (-RAND.nextFloat()) * 0.6D - 0.3D;
-      Vec3d vec3d1 = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+      Vector3d vec3d1 = new Vector3d(((double) RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
       vec3d1 = vec3d1.rotatePitch(-player.rotationPitch * ((float) Math.PI / 180F));
       vec3d1 = vec3d1.rotateYaw(-player.rotationYaw * ((float) Math.PI / 180F));
-      vec3d1 = vec3d1
-          .add(player.func_226277_ct_(), player.func_226280_cw_(), player.func_226281_cx_());
+      vec3d1 = vec3d1.add(player.getPosX(), player.getPosYEye(), player.getPosZ());
       ItemParticleData particle = new ItemParticleData(ParticleTypes.ITEM, stack);
 
       if (player.world instanceof ServerWorld) {

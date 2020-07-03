@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[30,)"
+loaderVersion="[32,)"
 issueTrackerURL="https://github.com/TheIllusiveC4/CakeChomps/issues"
 logoFile="${mod_icon}"
 [[mods]]
@@ -14,12 +14,12 @@ ${mod_description}
 [[dependencies.cakechomps]]
     modId="forge"
     mandatory=true
-    versionRange="[30,)"
+    versionRange="[32,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.cakechomps]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.1,1.16)"
+    versionRange="[1.16.1,1.17)"
     ordering="NONE"
     side="BOTH"
