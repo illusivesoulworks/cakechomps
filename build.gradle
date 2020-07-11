@@ -1,6 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.2.6-SNAPSHOT'
-	id 'maven-publish'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
@@ -62,12 +61,12 @@ curseforge {
         addGameVersion "Fabric"
 		addGameVersion project.minecraft_version
 		addArtifact(sourcesJar)
-		mainArtifact(file("${project.buildDir}/libs/${archivesBaseName}-${version}.jar"))
 
 		relations {
-			requiredDependency 'fabric-api'
+			requiredDependency 'fabric'
 		}
 		afterEvaluate {
+			mainArtifact(remapJar)
 			uploadTask.dependsOn(remapJar)
 		}
 	}
