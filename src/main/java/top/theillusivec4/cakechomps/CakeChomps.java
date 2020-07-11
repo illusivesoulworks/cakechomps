@@ -47,16 +47,17 @@ public class CakeChomps implements ModInitializer {
 
         if (item != null) {
           ItemStack stack = new ItemStack(item);
+          float modifier = 0.017453292F;
 
           for (int i = 0; i < 16; i++) {
             Vec3d vec3d = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.1D,
                 RAND.nextDouble() * 0.1D + 0.1D, 0.0D);
-            vec3d = vec3d.rotateX(-player.pitch * 0.017453292F);
-            vec3d = vec3d.rotateY(-player.yaw * 0.017453292F);
+            vec3d = vec3d.rotateX(-player.pitch * modifier);
+            vec3d = vec3d.rotateY(-player.yaw * modifier);
             double d0 = (double) (-RAND.nextFloat()) * 0.6D - 0.3D;
             Vec3d vec3d1 = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-            vec3d1 = vec3d1.rotateX(-player.pitch * 0.017453292F);
-            vec3d1 = vec3d1.rotateY(-player.yaw * 0.017453292F);
+            vec3d1 = vec3d1.rotateX(-player.pitch * modifier);
+            vec3d1 = vec3d1.rotateY(-player.yaw * modifier);
             vec3d1 = vec3d1.add(player.getX(), player.getEyeY(), player.getZ());
             world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d1.x,
                 vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z);
