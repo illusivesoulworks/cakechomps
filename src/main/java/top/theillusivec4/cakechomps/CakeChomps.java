@@ -34,7 +34,7 @@ import net.minecraft.util.math.Vec3d;
 
 public class CakeChomps implements ModInitializer {
 
-  private static final Random RAND = new Random();
+  private static final Random RANDOM = new Random();
 
   @Override
   public void onInitialize() {
@@ -50,20 +50,20 @@ public class CakeChomps implements ModInitializer {
           float modifier = 0.017453292F;
 
           for (int i = 0; i < 16; i++) {
-            Vec3d vec3d = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.1D,
-                RAND.nextDouble() * 0.1D + 0.1D, 0.0D);
-            vec3d = vec3d.rotateX(-player.pitch * modifier);
-            vec3d = vec3d.rotateY(-player.yaw * modifier);
-            double d0 = (double) (-RAND.nextFloat()) * 0.6D - 0.3D;
-            Vec3d vec3d1 = new Vec3d(((double) RAND.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-            vec3d1 = vec3d1.rotateX(-player.pitch * modifier);
-            vec3d1 = vec3d1.rotateY(-player.yaw * modifier);
+            Vec3d vec3d = new Vec3d(((double) RANDOM.nextFloat() - 0.5D) * 0.1D,
+                RANDOM.nextDouble() * 0.1D + 0.1D, 0.0D);
+            vec3d = vec3d.rotateX(-player.getPitch() * modifier);
+            vec3d = vec3d.rotateY(-player.getYaw() * modifier);
+            double d0 = (double) (-RANDOM.nextFloat()) * 0.6D - 0.3D;
+            Vec3d vec3d1 = new Vec3d(((double) RANDOM.nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+            vec3d1 = vec3d1.rotateX(-player.getPitch() * modifier);
+            vec3d1 = vec3d1.rotateY(-player.getYaw() * modifier);
             vec3d1 = vec3d1.add(player.getX(), player.getEyeY(), player.getZ());
             world.addParticle(new ItemStackParticleEffect(ParticleTypes.ITEM, stack), vec3d1.x,
                 vec3d1.y, vec3d1.z, vec3d.x, vec3d.y + 0.05D, vec3d.z);
           }
-          player.playSound(player.getEatSound(stack), 0.5F + 0.5F * (float) RAND.nextInt(2),
-              (RAND.nextFloat() - RAND.nextFloat()) * 0.2F + 1F);
+          player.playSound(player.getEatSound(stack), 0.5F + 0.5F * (float) RANDOM.nextInt(2),
+              (RANDOM.nextFloat() - RANDOM.nextFloat()) * 0.2F + 1F);
         }
       }
       return ActionResult.PASS;
