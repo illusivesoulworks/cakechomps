@@ -26,6 +26,8 @@ dependencies {
 }
 
 processResources {
+	from("CHANGELOG.md")
+
 	inputs.property "version", project.version
 
 	filesMatching("fabric.mod.json") {
@@ -44,10 +46,10 @@ java {
 
 sourceSets {
 	main {
-		resources {
-			srcDirs += 'docs'
-		}
-	}
+        resources {
+            srcDirs += '../docs'
+        }
+    }
 }
 
 curseforge {
@@ -56,7 +58,7 @@ curseforge {
 		id = "${curse_id}"
 		releaseType = "${curse_release}"
 		changelogType = 'markdown'
-		changelog = file('docs/CHANGELOG.md')
+		changelog = file('CHANGELOG.md')
 		addGameVersion "Java 16"
         addGameVersion "Fabric"
 		addGameVersion project.minecraft_version
