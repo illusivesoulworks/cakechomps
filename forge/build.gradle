@@ -1,26 +1,29 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.minecraftforge.net' }
-        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url = 'https://files.minecraftforge.net/maven' }
+		maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://plugins.gradle.org/m2/' }
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-		classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.0'
+        classpath group: 'gradle.plugin.com.matthewprenger', name: 'CurseGradle', version: '1.4.0'
+		classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
 version = "${mod_version}"
-group = "top.theillusivec4.${mod_id}"
-archivesBaseName = "${mod_id}-forge"
+group = "top.theillusivec4.cakechomps"
+archivesBaseName = "cakechomps-forge"
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 minecraft {
-    mappings channel: 'official', version: "${version_minecraft}"
+    mappings channel: 'parchment', version: '2021.12.05-1.17.1'
 	
     runs {
         client {
@@ -52,7 +55,25 @@ minecraft {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${version_forge}"
+    minecraft "net.minecraftforge:forge:${forge_version}"
+}
+
+def replaceResources = tasks.register("replaceResources", Copy) {
+    it.outputs.upToDateWhen { false }
+
+    it.from(sourceSets.main.resources) {
+        include "META-INF/mods.toml"
+        expand 'version': version, 'mc_version_range': mc_version_range, 'forge_version_range': forge_version_range, "loader_version": loader_version
+    }
+    it.into "$buildDir/resources/main/"
+}
+
+processResources {
+    from("CHANGELOG.md")
+    from("../LICENSE")
+    duplicatesStrategy(DuplicatesStrategy.FAIL)
+    exclude('META-INF/mods.toml')
+    configure { finalizedBy(replaceResources) }
 }
 
 sourceSets {
@@ -64,15 +85,13 @@ sourceSets {
 }
 
 jar {
-    from('CHANGELOG.md')
-
     manifest {
-        attributes(["Specification-Title": "${mod_id}",
-                    "Specification-Vendor": "${mod_author}",
-                    "Specification-Version": "1",
-                    "Implementation-Title": "${mod_id}",
-                    "Implementation-Vendor" :"${mod_author}",
-                    "Implementation-Version": "${mod_version}",
+        attributes(["Specification-Title"     : "Cake Chomps",
+                    "Specification-Vendor"    : "C4",
+                    "Specification-Version"   : "1",
+                    "Implementation-Title"    : "Cake Chomps",
+                    "Implementation-Version"  : "${getArchiveVersion()}",
+                    "Implementation-Vendor"   : "C4",
                     "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")],)
     }
 }
@@ -89,13 +108,15 @@ artifacts {
 jar.finalizedBy('reobfJar')
 
 curseforge {
-    apiKey = findProperty('curseKey') ?: 0
-    project {
-        id = "${curse_id}"
+	project {
+        apiKey = findProperty('curseKey') ?: 0
+        id = "307943"
         releaseType = "${curse_release}"
         changelogType = 'markdown'
         changelog = file('CHANGELOG.md')
-        addGameVersion '1.17.1'
         addArtifact(sourcesJar)
+        "${curse_versions}".split(',').each {
+            addGameVersion "${it}"
+        }
     }
 }

@@ -41,7 +41,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.network.FMLNetworkConstants;
+import net.minecraftforge.network.NetworkConstants;
 
 @Mod(CakeChomps.MOD_ID)
 public class CakeChomps {
@@ -52,7 +52,7 @@ public class CakeChomps {
 
   public CakeChomps() {
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        () -> new IExtensionPoint.DisplayTest(() -> FMLNetworkConstants.IGNORESERVERONLY,
+        () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
             (a, b) -> true));
     MinecraftForge.EVENT_BUS.addListener(this::interactBlock);
   }
@@ -86,7 +86,7 @@ public class CakeChomps {
 
     if (evt.getUseBlock() == net.minecraftforge.eventbus.api.Event.Result.ALLOW ||
         (evt.getUseBlock() != net.minecraftforge.eventbus.api.Event.Result.DENY && !flag1)) {
-      ItemStack blockStack = block.getPickBlock(state, null, world, pos, player);
+      ItemStack blockStack = block.getCloneItemStack(state, null, world, pos, player);
 
       for (int i = 0; i < 16; ++i) {
         Vec3 vec3 =
