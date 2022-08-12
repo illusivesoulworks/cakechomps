@@ -1,26 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "cakechomps",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "Cake Chomps",
-  "description": "Adds sound and crumb particles when you eat cake.",
-  "authors": ["C4"],
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_author}"
+  ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/cake-chomps",
-    "sources": "https://github.com/TheIllusiveC4/CakeChomps",
-    "issues": "https://github.com/TheIllusiveC4/CakeChomps/issues"
+    "issues": "${issue_tracker}"
   },
-  "license": "LGPL-3.0-or-later",
-  "icon": "assets/cakechomps/cakechomps_icon.png",
+  "license": "${license}",
+  "icon": "${mod_id}_icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "top.theillusivec4.cakechomps.CakeChomps"
+      "com.illusivesoulworks.cakechomps.CakeChompsFabricMod"
     ]
   },
+  "mixins": [],
   "depends": {
-    "fabricloader": ">=0.11.3",
-    "fabric-events-interaction-v0": "*",
-    "minecraft": "1.18.x"
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "${fabric_mc_version_range}",
+    "java": ">=17"
   }
 }
