@@ -26,6 +26,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -50,7 +51,7 @@ public class CakeChompsForgeMod {
       UseOnContext useoncontext = new UseOnContext(player, hand, result);
       ItemStack stack = player.getItemInHand(hand);
 
-      if (evt.getUseItem() != net.minecraftforge.eventbus.api.Event.Result.DENY) {
+      if (evt.getUseItem() != Event.Result.DENY) {
         InteractionResult interact = stack.onItemUseFirst(useoncontext);
 
         if (interact != InteractionResult.PASS) {
@@ -61,8 +62,8 @@ public class CakeChompsForgeMod {
       boolean flag1 = (player.isSecondaryUseActive() && flag) &&
           !(player.getMainHandItem().doesSneakBypassUse(player.getLevel(), pos, player) &&
               player.getOffhandItem().doesSneakBypassUse(player.getLevel(), pos, player));
-      return evt.getUseBlock() == net.minecraftforge.eventbus.api.Event.Result.ALLOW ||
-          (evt.getUseBlock() != net.minecraftforge.eventbus.api.Event.Result.DENY && !flag1);
+      return evt.getUseBlock() == Event.Result.ALLOW ||
+          (evt.getUseBlock() != Event.Result.DENY && !flag1);
     });
   }
 }
