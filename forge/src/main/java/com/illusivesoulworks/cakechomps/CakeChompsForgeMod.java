@@ -60,8 +60,8 @@ public class CakeChompsForgeMod {
       }
       boolean flag = !player.getMainHandItem().isEmpty() || !player.getOffhandItem().isEmpty();
       boolean flag1 = (player.isSecondaryUseActive() && flag) &&
-          !(player.getMainHandItem().doesSneakBypassUse(player.getLevel(), pos, player) &&
-              player.getOffhandItem().doesSneakBypassUse(player.getLevel(), pos, player));
+          !(player.getMainHandItem().doesSneakBypassUse(player.level(), pos, player) &&
+              player.getOffhandItem().doesSneakBypassUse(player.level(), pos, player));
       return evt.getUseBlock() == Event.Result.ALLOW ||
           (evt.getUseBlock() != Event.Result.DENY && !flag1);
     });
