@@ -30,14 +30,13 @@ import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkConstants;
 
 @Mod(CakeChompsMod.MOD_ID)
 public class CakeChompsForgeMod {
 
   public CakeChompsForgeMod() {
     ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,
+        () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
             (a, b) -> true));
     MinecraftForge.EVENT_BUS.addListener(this::useCake);
   }
