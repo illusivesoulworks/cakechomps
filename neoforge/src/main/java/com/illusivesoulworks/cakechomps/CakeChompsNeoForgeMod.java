@@ -17,21 +17,16 @@
 
 package com.illusivesoulworks.cakechomps;
 
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.minecraft.world.InteractionResult;
-import org.quiltmc.loader.api.ModContainer;
-import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import net.neoforged.fml.IExtensionPoint;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
 
-public class CakeChompsQuiltMod implements ModInitializer {
+@Mod(CakeChompsMod.MOD_ID)
+public class CakeChompsNeoForgeMod {
 
-  @Override
-  public void onInitialize(ModContainer modContainer) {
-    UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-      CakeChompsMod.useCake(player, hitResult.getBlockPos(), hand, () -> {
-        boolean bl = !player.getMainHandItem().isEmpty() || !player.getOffhandItem().isEmpty();
-        return !(player.isSecondaryUseActive() && bl);
-      });
-      return InteractionResult.PASS;
-    });
+  public CakeChompsNeoForgeMod() {
+    ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+        () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
+            (a, b) -> true));
   }
 }

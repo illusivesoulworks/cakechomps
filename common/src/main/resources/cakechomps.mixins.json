@@ -1,0 +1,16 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "com.illusivesoulworks.cakechomps.mixin.core",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinServerPlayerGameMode"
+  ],
+  "client": [
+    "MixinMultiPlayerGameMode"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "${mod_id}.refmap.json"
+}
