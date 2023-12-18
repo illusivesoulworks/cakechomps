@@ -25,6 +25,9 @@ repositories {
             includeGroupByRegex 'org\\.quiltmc\\.qsl(?:\\.[a-z_]+)?'
         }
     }
+    maven {
+        url "https://cursemaven.com"
+    }
 }
 
 dependencies {
@@ -38,6 +41,8 @@ dependencies {
         exclude group: "net.fabricmc"
     }
     modImplementation "org.quiltmc.quilted-fabric-api:quilted-fabric-api:${quilted_fabric_api_version}"
+    modImplementation "curse.maven:selene-499980:4918100"
+    modImplementation "curse.maven:supplementaries-412082:4965068"
 
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")

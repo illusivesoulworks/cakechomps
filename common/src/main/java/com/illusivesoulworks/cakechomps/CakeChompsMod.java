@@ -17,6 +17,7 @@
 
 package com.illusivesoulworks.cakechomps;
 
+import com.illusivesoulworks.cakechomps.platform.Services;
 import java.util.Random;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
@@ -61,6 +62,11 @@ public class CakeChompsMod {
 
     if (player.getItemInHand(hand).is(ItemTags.CANDLES) && block instanceof CakeBlock &&
         state.getOptionalValue(CakeBlock.BITES).map(val -> val == 0).orElse(false)) {
+      return;
+    }
+
+    if (Services.PLATFORM.isModLoaded("supplementaries") &&
+        Services.PLATFORM.isSupplementariesDoubleCake(block, state, player.getItemInHand(hand))) {
       return;
     }
 
