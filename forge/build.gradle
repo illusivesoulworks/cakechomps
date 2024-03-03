@@ -83,7 +83,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
-    compileOnly fg.deobf("curse.maven:supplementaries-412082:4965071")
+    compileOnly fg.deobf("curse.maven:amendments-896746:5152011")
     compileOnly fg.deobf("curse.maven:selene-499980:4915903")
 }
 

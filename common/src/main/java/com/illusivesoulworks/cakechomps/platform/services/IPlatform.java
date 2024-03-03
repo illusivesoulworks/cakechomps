@@ -8,5 +8,5 @@ public interface IPlatform {
 
   boolean isModLoaded(String id);
 
-  boolean isSupplementariesDoubleCake(Block block, BlockState state, ItemStack itemInHand);
+  boolean isAmendmentsDoubleCake(Block block, BlockState state, ItemStack itemInHand);
 }

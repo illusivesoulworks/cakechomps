@@ -1,6 +1,6 @@
 package com.illusivesoulworks.cakechomps.services;
 
-import com.illusivesoulworks.cakechomps.integration.SupplementariesIntegration;
+import com.illusivesoulworks.cakechomps.integration.AmendmentsIntegration;
 import com.illusivesoulworks.cakechomps.platform.services.IPlatform;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ public class FabricPlatform implements IPlatform {
   }
 
   @Override
-  public boolean isSupplementariesDoubleCake(Block block, BlockState state, ItemStack itemInHand) {
-    return SupplementariesIntegration.isDoubleCake(block, state, itemInHand);
+  public boolean isAmendmentsDoubleCake(Block block, BlockState state, ItemStack itemInHand) {
+    return AmendmentsIntegration.isDoubleCake(block, state, itemInHand);
   }
 }

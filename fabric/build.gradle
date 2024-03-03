@@ -23,7 +23,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "curse.maven:selene-499980:4918100"
-    modImplementation "curse.maven:supplementaries-412082:4965068"
+    modImplementation "curse.maven:amendments-896746:5152010"
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")
 }

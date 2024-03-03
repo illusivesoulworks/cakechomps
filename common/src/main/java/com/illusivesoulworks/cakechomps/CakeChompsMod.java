@@ -65,8 +65,8 @@ public class CakeChompsMod {
       return;
     }
 
-    if (Services.PLATFORM.isModLoaded("supplementaries") &&
-        Services.PLATFORM.isSupplementariesDoubleCake(block, state, player.getItemInHand(hand))) {
+    if (Services.PLATFORM.isModLoaded("amendments") &&
+        Services.PLATFORM.isAmendmentsDoubleCake(block, state, player.getItemInHand(hand))) {
       return;
     }
 
