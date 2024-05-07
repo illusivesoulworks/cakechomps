@@ -19,10 +19,9 @@
     "${mod_id}.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14",
+    "fabricloader": ">=0.15",
     "fabric-api": "*",
     "minecraft": "${minecraft_version_range_alt}",
-    "java": ">=17"
+    "java": ">=${java_version}"
   }
 }
-  

@@ -17,16 +17,11 @@
 
 package com.illusivesoulworks.cakechomps;
 
-import net.neoforged.fml.IExtensionPoint;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 
 @Mod(CakeChompsMod.MOD_ID)
 public class CakeChompsNeoForgeMod {
 
   public CakeChompsNeoForgeMod() {
-    ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
-        () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
-            (a, b) -> true));
   }
 }
