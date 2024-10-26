@@ -18,14 +18,14 @@
 package com.illusivesoulworks.cakechomps;
 
 import net.minecraftforge.fml.IExtensionPoint;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(CakeChompsMod.MOD_ID)
 public class CakeChompsForgeMod {
 
-  public CakeChompsForgeMod() {
-    ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+  public CakeChompsForgeMod(FMLJavaModLoadingContext context) {
+    context.registerExtensionPoint(IExtensionPoint.DisplayTest.class,
         () -> new IExtensionPoint.DisplayTest(() -> IExtensionPoint.DisplayTest.IGNORESERVERONLY,
             (a, b) -> true));
   }
