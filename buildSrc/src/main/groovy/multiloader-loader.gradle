@@ -54,11 +54,6 @@ tasks.register("publishCurseForge", TaskPublishCurseForge) {
     def artifactName = "${base.archivesName.get()}-${project.version}"
     def artifactPath = "${project.layout.buildDirectory.get()}/libs"
     def mainFile = upload(projectId, file("${artifactPath}/${artifactName}.jar"))
-    file(artifactPath).listFiles({ File file ->
-        !file.name.contentEquals("${artifactName}.jar") && file.name.startsWith(artifactName)
-    } as FileFilter).each {
-        mainFile.withAdditionalFile(it)
-    }
     mainFile.changelogType = 'markdown'
     mainFile.changelog = getRootProject().file('CHANGELOG_LATEST.md')
     mainFile.releaseType = "${project.release_type}"
@@ -67,6 +62,11 @@ tasks.register("publishCurseForge", TaskPublishCurseForge) {
     }
     mainFile.addEnvironment("Client")
     mainFile.addEnvironment("Server")
+    file(artifactPath).listFiles({ File file ->
+        !file.name.contentEquals("${artifactName}.jar") && file.name.startsWith(artifactName)
+    } as FileFilter).each {
+        mainFile.withAdditionalFile(it)
+    }
 
     doLast {
 
@@ -86,11 +86,11 @@ modrinth {
     changelog = getRootProject().file('CHANGELOG_LATEST.md').text
     def artifactPath = "${project.layout.buildDirectory.get()}/libs"
     uploadFile = file("${artifactPath}/${artifactName}.jar")
+    gameVersions = "${project.release_versions}".split(",") as List<String>
     def secondaryFiles = file(artifactPath).listFiles({ File file ->
         !file.name.contentEquals("${artifactName}.jar") && file.name.startsWith(artifactName)
     } as FileFilter)
     additionalFiles = secondaryFiles != null ? secondaryFiles.toList() : []
-    gameVersions = "${project.release_versions}".split(",") as List<String>
 }
 
 tasks.modrinth.doLast {
