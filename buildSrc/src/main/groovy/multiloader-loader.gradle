@@ -49,7 +49,7 @@ tasks.named("sourcesJar", Jar) {
 
 tasks.register("publishCurseForge", TaskPublishCurseForge) {
     apiToken = "${System.getenv('CURSEFORGE_KEY')}"
-    debugMode = true
+    //debugMode = true
     def projectId = "${project.cf_id}".toString()
     def artifactName = "${base.archivesName.get()}-${project.version}"
     def artifactPath = "${project.layout.buildDirectory.get()}/libs"
@@ -78,7 +78,7 @@ tasks.register("publishCurseForge", TaskPublishCurseForge) {
 
 modrinth {
     token = "${System.getenv('MODRINTH_KEY')}" ?: ""
-    debugMode = true
+    //debugMode = true
     projectId = "${project.modrinth_id}"
     def artifactName = "${base.archivesName.get()}-${project.version}"
     versionName = artifactName
