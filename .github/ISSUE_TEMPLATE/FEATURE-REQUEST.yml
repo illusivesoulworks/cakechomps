@@ -17,4 +17,3 @@ body:
     placeholder: An amazing idea for the mod!
   validations:
     required: true
-

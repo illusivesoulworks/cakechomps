@@ -1,6 +1,5 @@
 package com.illusivesoulworks.cakechomps.mixin;
 
-import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.entity.player.Player;
@@ -14,8 +13,6 @@ import net.minecraft.world.phys.BlockHitResult;
 
 public class CakePipeline {
 
-  private static final Random RANDOM = new Random();
-
   private int lastBiteLevel = -1;
   private ItemStack refStack = ItemStack.EMPTY;
 
@@ -24,7 +21,7 @@ public class CakePipeline {
     BlockState state = level.getBlockState(pos);
     state.getOptionalValue(CakeBlock.BITES).ifPresent(val -> {
       this.lastBiteLevel = val;
-      this.refStack = state.getBlock().getCloneItemStack(level, pos, state);
+      this.refStack = state.getCloneItemStack(level, pos, false);
     });
   }
 
